@@ -51,7 +51,7 @@ public class FileController {
 
         // 다운로드 응답을 위한 헤더 세팅
         // - ContentType            : application/octet-stream
-        // - Content-Disposition    : attachment, filename="파일명.확장자"
+        // - Content-Disposition    : attachment; filename="파일명.확장자"
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 
