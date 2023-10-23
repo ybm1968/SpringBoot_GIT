@@ -26,8 +26,8 @@ public class UserController {
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @GetMapping(value={"/", ""})
     public String index() {
-        int result = 10 / 0;
-        log.info(result + "");
+        // int result = 10 / 0;
+        // log.info(result + "");
         return "user/index";
     }
 

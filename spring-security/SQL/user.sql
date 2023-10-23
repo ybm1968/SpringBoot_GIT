@@ -1,4 +1,4 @@
-DROP TABLE `user`;
+-- user : 회원 테이블
 CREATE TABLE `user` (
   `USER_NO` int NOT NULL AUTO_INCREMENT,
   `USER_ID` varchar(100) NOT NULL,
@@ -10,6 +10,7 @@ CREATE TABLE `user` (
   `ENABLED` int DEFAULT 1,
   PRIMARY KEY (`USER_NO`)
 ) COMMENT='회원';
+
 
 -- 기본 데이터
 -- NoOpPasswordEncoder - 암호화 없이 로그인
