@@ -4,3 +4,17 @@ CREATE TABLE `user_auth` (
     , auth varchar(100) NOT NULL                -- 권한 (ROLE_USER, ROLE_ADMIN, ...)
     , PRIMARY KEY(auth_no)                      
 );
+
+-- 기본 데이터
+-- 사용자 
+-- * 권한 : ROLE_USER
+INSERT INTO user_auth ( user_id,  auth )
+VALUES ( 'user', 'ROLE_USER' );
+
+-- 관리자
+-- * 권한 : ROLE_USER, ROLE_ADMIN
+INSERT INTO user_auth ( user_id,  auth )
+VALUES ( 'admin', 'ROLE_USER' );
+
+INSERT INTO user_auth ( user_id,  auth )
+VALUES ( 'admin', 'ROLE_ADMIN' );

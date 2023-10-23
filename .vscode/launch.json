@@ -18,6 +18,17 @@
             "mainClass": "com.joeun.springsecurity.SpringSecurityApplication",
             "projectName": "spring-security",
             "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=54411 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=spring-security"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-LayoutApplication<layout>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.joeun.layout.LayoutApplication",
+            "projectName": "layout",
+            "args": "",
             "envFile": "${workspaceFolder}/.env"
         }
     ]
