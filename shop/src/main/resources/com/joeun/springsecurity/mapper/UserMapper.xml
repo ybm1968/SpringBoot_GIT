@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE user_no = #{userNo}
     </select>
 
-       <!-- 회원 조회 - id -->
+    <!-- 회원 조회 - id -->
     <select id="selectById" resultType="Users">
         SELECT *
         FROM user
@@ -73,11 +73,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 회원 수정 -->
     <update id="update">
-        update user 
-            set user_id = #{userId}
-                ,user_pw = #{userpw}
-                ,name = #{name}
-                ,email = #{email}
+        UPDATE user
+           SET user_id = #{userId}
+              ,user_pw = #{userPw}
+              ,name = #{name}
+              ,email = #{email}
         WHERE user_id = #{userId}
     </update>
 

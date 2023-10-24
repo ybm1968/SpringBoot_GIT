@@ -25,7 +25,9 @@
 }
 
 .sidebar .nav-link.active {
-  color: #2470dc;
+  /* active 정리 */
+  background-color: #2470dc;
+  color: white;
 }
 
 .sidebar-heading {

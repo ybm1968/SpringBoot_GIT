@@ -11,10 +11,10 @@
 
 </head>
 <body layout:fragment="content">
-    
+
     <div class="container p-4">
         <h1 class="text-center my-3">마이 페이지</h1>
-        
+    
         <form action="/logout" method="post">
             <!-- csrf token -->
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
@@ -26,8 +26,6 @@
             </div>
         </form>
 
-
     </div>
-
 </body>
 </html>

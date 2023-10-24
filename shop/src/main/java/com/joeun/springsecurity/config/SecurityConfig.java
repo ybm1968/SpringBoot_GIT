@@ -70,68 +70,77 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // : 사용자의 권한을 확인하여 권한에 따라 자원의 사용범위를 구분하여 허락하는 것
 
         // 인가 처리
-        // 람다식
-        http.authorizeRequests((authorize) -> authorize
+        // 람다식 
+        http
+            .authorizeRequests((authorize) -> authorize
                                 .antMatchers("/**").permitAll()
-                                .antMatchers("/css/**", "/js/**", "/img/**").permitAll()       // /static/~ 정적자원 인가처리
+                                .antMatchers("/css/**", "/js/**", "/img/**").permitAll()    // /static/~ 정적자원 인가처리
                                 .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                                 .antMatchers("/admin/**").hasRole("ADMIN")
                                 // anyRequest()         : 모든(이외의) 요청을 지정
                                 // authenticated()      : 인증된 사용자만 허용
-                                // .anyRequest().permitAll()       
-                                .anyRequest().authenticated()       
-                                );
-        // 빌더 패턴
+                                // .anyRequest().permitAll()
+                                .anyRequest().authenticated()
+                              )
+        ;
+
+        // 빌더 패턴 
         // http.authorizeRequests()                   // 인가 설정
         //     //  antMatchers("자원 경로")            - 인가에 대한 URL 경로를 설정
         //     //  permitAll()                        - 모든 사용자 허용
         //     //  hasAnyRole()                       - 여러 권한에 대한 허용 
         //     //  hasRole()                          - 단일 권한에 대한 허용
         //     .antMatchers("/").permitAll()
-        //     // .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-        //     // .antMatchers("/admin/**").hasRole("ADMIN")
+        //     .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+        //     .antMatchers("/admin/**").hasRole("ADMIN")
         //     ;
 
         // 로그인 설정
-        http.formLogin( (form) -> form
+        http.formLogin( form -> form
                                 .defaultSuccessUrl("/")         // 로그인 성공 시, URL : "/"(기본값)
                                 .loginPage("/login")                    // 커스텀 로그인 페이지 지정 (default:/login)
                                 .loginProcessingUrl("/loginPro")// 커스텀 로그인 요청 처리 경로 지정 (default:/login)
                                 .usernameParameter("id")        // 아이디 요청 파라미터 이름 설정  (default:username)
                                 .passwordParameter("pw")        // 비밀번호 요청 파라미터 이름 설정 (default:password)
                                 .successHandler( authenticationSuccessHandler() ) // 로그인 성공 처리자 빈을 지정
-                                .permitAll()
-                        );
+                                .permitAll()                                      // 로그인 폼은 모든 사용자에게 허용
+        );
+
         // http.formLogin()
-        //     .defaultSuccessUrl("/")         // 로그인 성공 시, URL : "/"(기본값)
-        //     .loginPage("/login")                    // 커스텀 로그인 페이지 지정 (default:/login)
-        //     .loginProcessingUrl("/loginPro")// 커스텀 로그인 요청 처리 경로 지정 (default:/login)
-        //     .usernameParameter("id")        // 아이디 요청 파라미터 이름 설정  (default:username)
-        //     .passwordParameter("pw")        // 비밀번호 요청 파라미터 이름 설정 (default:password)
-        //     .successHandler( authenticationSuccessHandler() ) // 로그인 성공 처리자 빈을 지정
-        //     .permitAll()                                      // 로그인 폼은 모든 사용자에게 허용
-        //     ;
+            // .defaultSuccessUrl("/")         // 로그인 성공 시, URL : "/"(기본값)
+            // .loginPage("/login")                    // 커스텀 로그인 페이지 지정 (default:/login)
+            // .loginProcessingUrl("/loginPro")// 커스텀 로그인 요청 처리 경로 지정 (default:/login)
+            // .usernameParameter("id")        // 아이디 요청 파라미터 이름 설정  (default:username)
+            // .passwordParameter("pw")        // 비밀번호 요청 파라미터 이름 설정 (default:password)
+            // .successHandler( authenticationSuccessHandler() ) // 로그인 성공 처리자 빈을 지정
+            // .permitAll()                                      // 로그인 폼은 모든 사용자에게 허용
+            // ;
 
         // 로그아웃 설정
         http.logout( (logout) -> logout
-                                .logoutSuccessUrl("/login")      
-                                .logoutUrl("/logout")
-                                .deleteCookies("remeber-id", "remember-me", "JSESSIONID")        
-                                .invalidateHttpSession(true)
-                                .permitAll()
+                                    .logoutSuccessUrl("/login")
+                                    .logoutUrl("/logout")  
+                                    // 쿠키 삭제
+                                    .deleteCookies("remember-id"
+                                                                        ,"remember-me"
+                                                                        ,"JSESSIONID")
+                                    .invalidateHttpSession(true)        // 세션 무효화
+                                    .permitAll()
                     );
+
         // http.logout()
         //     // .logoutSuccessUrl("/login")      // 로그아웃 성공 시, URL : "/login?logout" (기본값)
-        //     // .logoutUrl("/logout")                   // 로그아웃 요청 처리 경로 지정 (default:logout)
+        //     // .logoutUrl("/logout")            // 로그아웃 요청 처리 경로 지정 (default:logout)
         //     .permitAll()
         //     ;
 
         // 자동로그인 설정
         http.rememberMe( (remember) -> remember
-                                      .key("joeun")
-                                      .tokenRepository( tokenRepository() )
-                                      .tokenValiditySeconds( 60 * 60 * 24 * 7 )  
-                        );
+                                    .key("joeun")
+                                    .tokenRepository( tokenRepository() )
+                                    .tokenValiditySeconds( 60 * 60 * 24 * 7 )
+                       );
+
         // http.rememberMe()
         //     .key("joeun")
         //     // DataSource 가 등록된 PersistentRepository 토큰정보 객체 
@@ -143,9 +152,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 인증 예외 처리
         http.exceptionHandling( (exception) -> exception
-                                              // .accessDeniedPage("/exception")
-                                              .accessDeniedHandler( accessDeniedHandler() )
-                                );
+                                                // .accessDeniedPage("/exception")
+                                                .accessDeniedHandler( accessDeniedHandler() )
+        
+                              );
+
         // http.exceptionHandling()
         //     // .accessDeniedPage("/exception")     // 접근 거부 시, 이동 경로 지정
         //     .accessDeniedHandler( accessDeniedHandler() )
@@ -206,6 +217,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // 비밀번호 암호화 방식 지정 - BCryptPasswordEncoder 또는 NoOpPasswordEncoder
             .passwordEncoder( passwordEncoder )
             ;
+            
     }
 
     // PersistentRepository 토큰정보 객체 - 빈 등록
@@ -243,4 +255,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AccessDeniedHandler accessDeniedHandler() {
         return new CustomAccessDeniedHandler();
     }
+
+
+    
+    
 }

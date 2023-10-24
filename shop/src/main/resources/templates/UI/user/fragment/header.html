@@ -46,12 +46,13 @@
                     <strong sec:authentication="principal.users.userId">아이디</strong>
                   </a>
                   <ul class="dropdown-menu text-small">
+                    <!-- 관리자 메뉴 -->
                     <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                        <li><a href="dropdown-item" href="/admin">관리자</a></li>
+                      <li><a class="dropdown-item" href="/admin">관리자</a></li>
                     </th:block>
                     <li><a class="dropdown-item" href="/user">마이 페이지</a></li>
                     <li><a class="dropdown-item" href="/user/update">회원정보 수정</a></li>
-                    <li><a class="dropdown-item" href="/user/oreder">주문내역</a></li>
+                    <li><a class="dropdown-item" href="/user/order">주문내역</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
                       <form action="/logout" method="post">

@@ -1,4 +1,3 @@
-
 <!-- user - sidebar -->
 <!-- ~UI/user/fragment/sidebar -->
 <th:block th:fragment="sidebar">
@@ -9,9 +8,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
-            <ul class="nav flex-column">
+            <ul class="nav nav-pills flex-column">
               <li class="nav-item">
-                <a href="/user" class="nav-link d-flex align-items-center gap-2 active" aria-current="page" >
+                <a href="/user" class="nav-link d-flex align-items-center gap-2" aria-current="page" >
                   <svg class="bi"><use xlink:href="#house-fill"/></svg>
                   마이 페이지
                 </a>
@@ -31,9 +30,13 @@
             </ul>
   
             <hr class="my-3">
-  
+            
           </div>
         </div>
       </div>
 
+      <script>
+        $('[href="' + window.location.pathname + '"]').addClass('active')
+        
+      </script>
 </th:block>
