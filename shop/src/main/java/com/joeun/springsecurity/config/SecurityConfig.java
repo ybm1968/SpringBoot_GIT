@@ -75,7 +75,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests((authorize) -> authorize
                                 .antMatchers("/**").permitAll()
                                 .antMatchers("/css/**", "/js/**", "/img/**").permitAll()    // /static/~ 정적자원 인가처리
-                                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                                // .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                                // .antMatchers("/user/order").permitAll()
                                 .antMatchers("/admin/**").hasRole("ADMIN")
                                 // anyRequest()         : 모든(이외의) 요청을 지정
                                 // authenticated()      : 인증된 사용자만 허용

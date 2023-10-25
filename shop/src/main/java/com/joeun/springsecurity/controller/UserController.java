@@ -1,6 +1,7 @@
 package com.joeun.springsecurity.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.joeun.springsecurity.dto.Order;
 import com.joeun.springsecurity.dto.Users;
+import com.joeun.springsecurity.service.OrderService;
 import com.joeun.springsecurity.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +39,9 @@ public class UserController {
     
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OrderService orderService;
 
     @Autowired
     private PersistentTokenRepository persistentTokenRepository;
@@ -112,6 +118,50 @@ public class UserController {
         return "redirect:/login";
     }
     
+    /**
+     * 주문 내역 페이지
+     * @throws Exception
+     */
+    @GetMapping(value="/order")
+    public String order(Model model, Principal principal, Order order) throws Exception {
+        List<Order> orderList = null;
+        // 회원 주문 내역 데이터 요청
+        if( principal != null ) {
+            log.info("회원 : " + principal.getName());
+            String userId = principal.getName();
+            orderList = orderService.listByUserId(userId);
+            order = orderService.sumOrder(userId);
+            log.info("order : " + order);
+            model.addAttribute("orderList", orderList);
+            model.addAttribute("order", order);
+        }
+
+        return "user/order";
+    }
+
+    /**
+     * 주문 내역 페이지 - 비회원
+     * @param model
+     * @param principal
+     * @param order
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value="/order")
+    public String orderPost(Model model, Principal principal, Order order) throws Exception {
+        List<Order> orderList = null;
+        // 비회원 주문 내역 데이터 요청
+        // ✅ 비회원 전화번호           - phone
+        // ✅ 비회원 주문 비밀번호      - orderPw
+        if( principal == null && order.getPhone() != null ) {
+            log.info("비회원 : " + order.getPhone());
+            orderList = orderService.listByGuest(order);
+            order = orderService.sumOrderByGuest(order);
+            model.addAttribute("orderList", orderList);
+            model.addAttribute("order", order);
+        }
+        return "user/order";
+    }
     
 
     

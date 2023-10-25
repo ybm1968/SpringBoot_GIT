@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace="매퍼 인터페이스 경로" -->
+<mapper namespace="com.joeun.springsecurity.mapper.ProductMapper">
+
+    <!-- 상품 리스트 -->
+    <select id="list" resultType="Product">
+        select *
+        from product
+    </select> 
+
+    <!-- 상품 조회 -->
+    <select id="select" resultType="Product">
+        select *
+        from product
+        WHERE product_id = #{prodcutId}
+    </select>
+
+    <!-- 상품 등록 -->
+    <insert id="insert">
+        insert into product(product_id, name, unit_price, description, manufacturer, category, units_in_stock, `condition`, file)
+        VALUES( #{productId}, #{name}, #{unitPrice}, #{description}, #{manufacturer}, #{category}, #{unitsInStock}, #{condition}, #{file}  )
+    </insert>
+
+    <!-- 상품 수정 -->
+    <!-- 상품 삭제 -->
+   
+
+
+</mapper>
